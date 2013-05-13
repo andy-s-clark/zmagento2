@@ -124,6 +124,7 @@ Mage_Clean() {
         cd ${BASE_PATH}/magento2
         git checkout master
         git branch -D ${LOCAL_BRANCH}
+        rm -rf var/*
         cd ${current_path}
     fi
 }
