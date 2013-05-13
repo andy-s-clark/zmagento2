@@ -17,10 +17,11 @@ server {
         expires 30d; ## Assume all files are cachable
     }
 
-    ## These locations would be hidden by .htaccess normally # Should update for new structure in magento2
+    ## These locations would be hidden by .htaccess normally # May need additional updates for new structure in magento2
     location ^~ /app/                { deny all; }
-    location ^~ /includes/           { deny all; }
+    location ^~ /dev/     	     { deny all; }
     location ^~ /lib/                { deny all; }
+    location ^~ /media/customer/     { deny all; }
     location ^~ /media/downloadable/ { deny all; }
     location ^~ /pkginfo/            { deny all; }
     location ^~ /report/config.xml   { deny all; }
