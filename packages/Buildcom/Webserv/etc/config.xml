@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+	<modules>
+		<Buildcom_Webserv>
+			<version>0.0.1.0</version>
+			<active>true</active>
+		</Buildcom_Webserv>
+	</modules>
+	<frontend>
+		<routers>
+			<webserv>
+				<use>standard</use>
+				<args>
+					<module>Buildcom_Webserv</module>
+					<frontName>webserv</frontName>
+				</args>
+			</webserv>
+		</routers>
+	</frontend>
+</config>

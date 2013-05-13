@@ -21,7 +21,7 @@ Mage_Extract() {
     # Enable error reporting
     if [ ${ERROR_REPORTING} = Y ]; then
         if [ ! -f ${BASE_PATH}/magento/errors/local.xml ]; then
-echo TODO            cp ${BASE_PATH}/magento/errors/local.xml.sample ${BASE_PATH}/magento/errors/local.xml
+            cp ${BASE_PATH}/magento2/pub/errors/local.xml.sample ${BASE_PATH}/magento2/pub/errors/local.xml
         fi
     fi
 
@@ -43,7 +43,7 @@ echo TODO            cp ${BASE_PATH}/magento/errors/local.xml.sample ${BASE_PATH
     fi
 
     # Set permissions
-    chmod -R a+rwX ${BASE_PATH}/magento2/pub/media
+    chmod -R a+rwX ${BASE_PATH}/magento2/pub/media ${BASE_PATH}/magento2/pub/static
     chmod a+rwX ${BASE_PATH}/magento2/var ${BASE_PATH}/magento2/var/.htaccess ${BASE_PATH}/magento2/app/etc
 
     cd ${current_path}
@@ -124,26 +124,16 @@ Mage_Clean() {
         cd ${BASE_PATH}/magento2
         git checkout master
         git branch -D ${LOCAL_BRANCH}
-        rm -rf var/*
+        rm -rf var/* app/etc/local.xml
         cd ${current_path}
     fi
 }
 
 Mage_Link_Modules() {
-    # TODO
-    # Local packages
-    mkdir -p ${BASE_PATH}/magento/app/code/local
-    cd ${BASE_PATH}/magento/app/code/local
-    for package in `ls -d ../../../../modules/local/*`; do
+    # Packages
+    cd ${BASE_PATH}/magento2/app/code
+    for package in `ls -d ../../../packages/*`; do
         ln -s $package .
-    done
-
-    # Community packages
-
-    # Configs to enable modules
-    cd ${BASE_PATH}/magento/app/etc/modules
-    for config in `ls ../../../../modules/*.xml`; do
-        ln -s $config .
     done
 
     cd $current_path
