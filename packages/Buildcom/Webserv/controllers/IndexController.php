@@ -7,7 +7,7 @@ class Buildcom_Webserv_IndexController extends Mage_Core_Controller_Front_Action
     public function indexAction()
     {
         $model = Mage::getModel('Buildcom_Webserv_Model_Product');
-        $product = $model->load(self::MAGE_ENTITY_ID);
+        $product = $model->load(self::OMC_UNIQUE_ID);
         $this->_vardumpAsTable($product->getData());
     }
 
@@ -39,17 +39,17 @@ class Buildcom_Webserv_IndexController extends Mage_Core_Controller_Front_Action
      * TODO
      */
     public function collectionAction() {
-        $itemsCollection = Mage::getModel('Mage_Catalog_Model_Product')
+        $itemsCollection = Mage::getModel('Buildcom_Webserv_Model_Product')
             ->getCollection()
-            //->addIdFilter(array(1))
+            //->addIdFilter(array(self::OMC_UNIQUE_ID))
             /*->addAttributeToFilter(array(
             		array('attribute' => 'sku', '=' => 'BCI1573671'),
             ))*/
-            ->addAttributeToSelect('url_key')
+            //->addAttributeToSelect('url_key')
             ->load();
 
         foreach ( $itemsCollection as $item ) {
-            echo '<h2>' . htmlentities($item->getSku()) . '</h2>' . PHP_EOL;
+            //echo '<h2>' . htmlentities($item->getSku()) . '</h2>' . PHP_EOL;
             $this->_vardumpAsTable($item->getData());
         }
     }

@@ -1,5 +1,5 @@
 <?php
-class Buildcom_Webserv_Model_Product extends Mage_Core_Model_Abstract
+class Buildcom_Webserv_Model_Product extends Buildcom_Webserv_Model_Abstract
 {
     protected function _construct()
     {
