@@ -3,7 +3,7 @@
  *
  * Replaces Mage_Core_Model_Resource_Db_Collection_Abstract and Varien_Data_Collection_Db
  */
-abstract class Buildcom_Webserv_Model_Resource_Webserv_Collection_Abstract extends Varien_Data_Collection
+abstract class Buildcom_Webserv_Model_Resource_Collection_Abstract extends Varien_Data_Collection
 //
 {
     /**
@@ -26,6 +26,13 @@ abstract class Buildcom_Webserv_Model_Resource_Webserv_Collection_Abstract exten
      * @var Mage_Core_Model_Resource_Db_Abstract
      */
     protected $_resource;
+
+    /**
+     * Current scope (store Id)
+     *
+     * @var int
+     */
+    protected $_storeId;
 
     /**
      * Fields to select in query
@@ -110,6 +117,56 @@ abstract class Buildcom_Webserv_Model_Resource_Webserv_Collection_Abstract exten
         $this->_resource = $resource;
         /* $this->setConnection($this->getResource()->getReadConnection());
         $this->_initSelect(); */
+    }
+
+    /**
+     * Set store scope
+     *
+     * @param int|string|Mage_Core_Model_Store $store
+     * @return Mage_Catalog_Model_Resource_Collection_Abstract
+     */
+    public function setStore($store)
+    {
+        $this->setStoreId(Mage::app()->getStore($store)->getId());
+        return $this;
+    }
+
+    /**
+     * Set store scope
+     *
+     * @param int|string|Mage_Core_Model_Store $storeId
+     * @return Mage_Catalog_Model_Resource_Collection_Abstract
+     */
+    public function setStoreId($storeId)
+    {
+        if ($storeId instanceof Mage_Core_Model_Store) {
+            $storeId = $storeId->getId();
+        }
+        $this->_storeId = (int)$storeId;
+        return $this;
+    }
+
+    /**
+     * Return current store id
+     *
+     * @return int
+     */
+    public function getStoreId()
+    {
+        if (is_null($this->_storeId)) {
+            $this->setStoreId(Mage::app()->getStore()->getId());
+        }
+        return $this->_storeId;
+    }
+
+    /**
+     * Retrieve default store id
+     *
+     * @return int
+     */
+    public function getDefaultStoreId()
+    {
+        return Mage_Catalog_Model_Abstract::DEFAULT_STORE_ID;
     }
 
     /**

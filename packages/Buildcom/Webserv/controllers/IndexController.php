@@ -41,12 +41,12 @@ class Buildcom_Webserv_IndexController extends Mage_Core_Controller_Front_Action
     public function collectionAction() {
         $itemsCollection = Mage::getModel('Buildcom_Webserv_Model_Product')
             ->getCollection()
+            ->load();
             //->addIdFilter(array(self::OMC_UNIQUE_ID))
             /*->addAttributeToFilter(array(
             		array('attribute' => 'sku', '=' => 'BCI1573671'),
             ))*/
             //->addAttributeToSelect('url_key')
-            ->load();
 
         foreach ( $itemsCollection as $item ) {
             //echo '<h2>' . htmlentities($item->getSku()) . '</h2>' . PHP_EOL;

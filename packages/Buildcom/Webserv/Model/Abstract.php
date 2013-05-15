@@ -103,8 +103,8 @@ class Buildcom_Webserv_Model_Abstract extends Varien_Object
      */
     public function __construct(
         Mage_Core_Model_Context $context,
-        Mage_Core_Model_Resource_Abstract $resource = null,
-        Varien_Data_Collection_Db $resourceCollection = null,
+        Buildcom_Webserv_Model_Resource_Product $resource = null,
+        Buildcom_Webserv_Model_Resource_Product_Collection $resourceCollection = null,
         array $data = array()
     ) {
         $this->_eventDispatcher = $context->getEventDispatcher();

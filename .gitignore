@@ -1,3 +1,4 @@
 .project
 .*swp
 magento2/
+.kdev4/

@@ -75,6 +75,7 @@ class Buildcom_Webserv_Model_Product extends Buildcom_Webserv_Model_Abstract
      * @param Buildcom_Webserv_Model_Resource_Product_Collection $resourceCollection
      * @param array $data
      */
+    /* TODO
     public function __construct(
             Mage_Core_Model_Context $context,
             Buildcom_Webserv_Model_Resource_Product $resource,
@@ -82,7 +83,7 @@ class Buildcom_Webserv_Model_Product extends Buildcom_Webserv_Model_Abstract
             array $data = array()
     ) {
         parent::__construct($context, $resource, $resourceCollection, $data);
-    }
+    }*/
 
 
     protected function _construct()

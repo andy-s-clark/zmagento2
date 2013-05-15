@@ -16,8 +16,8 @@ class Buildcom_Webserv_Model_Observer
                 $this->_stockItemsArray[$productId] = Mage::getModel('Mage_CatalogInventory_Model_Stock_Item');
             }
             $productStockItem = $this->_stockItemsArray[$productId];
-//var_dump($product->getWebsiteId());
             $productStockItem->assignProduct($product);
+            $product->setData('is_salable', 1); // Forced
         }
         return $this;
     }
