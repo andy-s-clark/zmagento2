@@ -34,7 +34,7 @@ class Buildcom_Webserv_Model_Resource_Product_Collection extends
      */
     protected function _get_request_fake() {
         $results = array();
-        foreach (array(1573671) as $item_id) {
+        foreach (array(1573671, 1587876) as $item_id) {
             if ( $result = $this->_get_request($this->_resource->_getRequestUri($item_id)) ) {
                 $results[] = $result;
             }

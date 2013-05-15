@@ -17,4 +17,16 @@
 			</webserv>
 		</routers>
 	</frontend>
+	<global>
+	   <events>
+            <webserv_product_load_after>
+                <observers>
+                    <inventory>
+                        <class>Buildcom_Webserv_Model_Observer</class>
+                        <method>addInventoryData</method>
+                    </inventory>
+                </observers>
+            </webserv_product_load_after>
+        </events>
+    </global>
 </config>

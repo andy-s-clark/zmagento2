@@ -1,4 +1,9 @@
 <?php
+/**
+ *
+ * @see Mage_Catalog_Model_Abstract and Mage_Core_Model_Abstract
+ *
+ */
 class Buildcom_Webserv_Model_Abstract extends Varien_Object
 {
     /**
@@ -225,6 +230,16 @@ class Buildcom_Webserv_Model_Abstract extends Varien_Object
     public function getCollection()
     {
         return $this->getResourceCollection();
+    }
+
+    /**
+     * Retrieve store object
+     *
+     * @return Mage_Core_Model_Store
+     */
+    public function getStore()
+    {
+        return Mage::app()->getStore($this->getStoreId());
     }
 
     /**
