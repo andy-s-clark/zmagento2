@@ -16,5 +16,12 @@
 				</args>
 			</debug>
 		</routers>
+		<layout>
+			<updates>
+				<test module="Buildcom_Debug">
+					<file>layout.xml</file>
+				</test>
+			</updates>
+		</layout>
 	</frontend>
 </config>

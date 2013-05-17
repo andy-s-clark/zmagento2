@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<layout version="0.1.0">
+
+<!--
+Default layout, loads most of the pages
+-->
+
+    <default>
+
+        <!-- Buildcom_Debug -->
+        <reference name="right">
+            <block type="Buildcom_Debug_Block_TestDebug" name="right.test" before="-">
+                <action method="setTemplate">
+                    <template>test.phtml</template>
+                </action>
+            </block>
+        </reference>
+
+    </default>
+
+</layout>

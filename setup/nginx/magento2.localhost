@@ -55,7 +55,7 @@ server {
         fastcgi_param  MAGE_RUN_CODE default; ## Store code is defined in administration > Configuration > Manage Stores
         fastcgi_param  MAGE_RUN_TYPE store;
         fastcgi_param  MAGE_IS_DEVELOPER_MODE true;
-        fastcgi_param  MAGE_PROFILER html;
+#        fastcgi_param  MAGE_PROFILER html;
         fastcgi_read_timeout 60;
         include        fastcgi_params; ## See /etc/nginx/fastcgi_params
     }
