@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+	<modules>
+		<Buildcom_Debug>
+			<version>0.0.1.0</version>
+			<active>true</active>
+		</Buildcom_Debug>
+	</modules>
+	<frontend>
+		<routers>
+			<debug>
+				<use>standard</use>
+				<args>
+					<module>Buildcom_Debug</module>
+					<frontName>debug</frontName>
+				</args>
+			</debug>
+		</routers>
+	</frontend>
+</config>
