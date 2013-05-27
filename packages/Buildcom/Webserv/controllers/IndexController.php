@@ -1,39 +1,56 @@
 <?php
-class Buildcom_Webserv_IndexController extends Mage_Core_Controller_Front_Action
-{
-    const OMC_UNIQUE_ID='1573671'; // Test product from OMC
-    const MAGE_ENTITY_ID = 1; // Test product
+class Buildcom_Webserv_IndexController extends Mage_Core_Controller_Front_Action {
+    const OMC_UNIQUE_PRODUCT_ID = '1573671';
+    // Test product from OMC
+    const MAGE_PRODUCT_ENTITY_ID = 1;
+    // Test product
+    const OMC_UNIQUE_CATEGORY_ID = '5';
+    // Test product from OMC
+    const MAGE_CATEGORY_ENTITY_ID = 3;
+    // Test product
 
-    public function indexAction()
-    {
+    public function indexAction() {
         $model = Mage::getModel('Buildcom_Webserv_Model_Product');
-        $product = $model->load(self::OMC_UNIQUE_ID);
-        $this->_vardumpAsTable($product->getData());
+        $product = $model -> load(self::OMC_UNIQUE_PRODUCT_ID);
+        $this -> _vardumpAsTable($product -> getData());
+    }
+
+    public function categoryAction() {
+        $model = Mage::getModel('Buildcom_Webserv_Model_Category');
+        $category = $model -> load(self::OMC_UNIQUE_CATEGORY_ID);
+        $this -> _vardumpAsTable($category -> getData());
     }
 
     /**
      * Show product details as listed in OMC
      */
-    public function omdirectAction()
-    {
+    public function omdirectAction() {
         Magento_Profiler::start('omtimer');
         $helper = Mage::helper('Buildcom_Webserv_Helper_Data');
-        $helper->setService('products/' . self::OMC_UNIQUE_ID);
+        $helper -> setService('products/' . self::OMC_UNIQUE_PRODUCT_ID);
         //$helper->productId = '75050CB';
         //$helper->manufacturer = 'Delta';
-        $product = $helper->execute();
+        $product = $helper -> execute();
         Magento_Profiler::stop('omtimer');
-        $this->_vardumpAsTable((array)$product);
+        $this -> _vardumpAsTable((array)$product);
     }
 
     /**
      * Show a catalog/product
      */
-    public function catalogproductAction()
-    {
+    public function catalogproductAction() {
         $model = Mage::getModel('Mage_Catalog_Model_Product');
-        $product = $model->load(self::MAGE_ENTITY_ID);
-        $this->_vardumpAsTable($product->getData());
+        $product = $model -> load(self::MAGE_PRODUCT_ENTITY_ID);
+        $this -> _vardumpAsTable($product -> getData());
+    }
+
+    /**
+     * Show a catalog/category
+     */
+    public function catalogcategoryAction() {
+        $model = Mage::getModel('Mage_Catalog_Model_Category');
+        $product = $model -> load(self::MAGE_CATEGORY_ENTITY_ID);
+        $this -> _vardumpAsTable($product -> getData());
     }
 
     /**
@@ -41,18 +58,20 @@ class Buildcom_Webserv_IndexController extends Mage_Core_Controller_Front_Action
      * TODO
      */
     public function collectionAction() {
-        $itemsCollection = Mage::getModel('Buildcom_Webserv_Model_Product')
-            ->getCollection()
-            ->load();
-            //->addIdFilter(array(self::OMC_UNIQUE_ID))
-            /*->addAttributeToFilter(array(
-            		array('attribute' => 'sku', '=' => 'BCI1573671'),
-            ))*/
-            //->addAttributeToSelect('url_key')
-
-        foreach ( $itemsCollection as $item ) {
+        $itemsCollection = Mage::getModel('Buildcom_Webserv_Model_Product') -> getCollection() -> load();
+        //->addIdFilter(array(self::OMC_UNIQUE_PRODUCT_ID))
+        /*->addAttributeToFilter(array(
+         array('attribute' => 'sku', '=' => 'BCI1573671'),
+         ))*/
+        //->addAttributeToSelect('url_key')
+        foreach ($itemsCollection as $item) {
             //echo '<h2>' . htmlentities($item->getSku()) . '</h2>' . PHP_EOL;
-            $this->_vardumpAsTable($item->getData());
+            //$this -> _vardumpAsTable($item -> getData());
+        }
+
+        $itemsCollection = Mage::getModel('Buildcom_Webserv_Model_Category') -> getCollection() -> load();
+        foreach ($itemsCollection as $item) {
+            $this -> _vardumpAsTable($item -> getData());
         }
     }
 
@@ -61,9 +80,8 @@ class Buildcom_Webserv_IndexController extends Mage_Core_Controller_Front_Action
      * @param array $data
      * @return boolean
      */
-    protected function _vardumpAsTable($data)
-    {
-        if ( ! is_array($data) ) {
+    protected function _vardumpAsTable($data) {
+        if (!is_array($data)) {
             return FALSE;
         }
 
@@ -73,13 +91,13 @@ class Buildcom_Webserv_IndexController extends Mage_Core_Controller_Front_Action
         echo '		<th>Type</th>' . PHP_EOL;
         echo '		<th>Value</th>' . PHP_EOL;
         echo '	</tr>' . PHP_EOL;
-        foreach ( $data as $key => $value ) {
+        foreach ($data as $key => $value) {
             $type = gettype($value);
             echo '	<tr>' . PHP_EOL;
             echo '		<td>' . htmlentities($key) . '</td>' . PHP_EOL;
             echo '		<td>' . htmlentities($type) . '</td>' . PHP_EOL;
             echo '		<td>';
-            if ( empty($type) || $type == 'array' || $type == 'object' ) {
+            if (empty($type) || $type == 'array' || $type == 'object') {
                 echo '<div style="width: 300px; overflow: auto;">' . PHP_EOL;
                 var_dump($value);
                 echo '</div>' . PHP_EOL;
@@ -92,4 +110,5 @@ class Buildcom_Webserv_IndexController extends Mage_Core_Controller_Front_Action
         echo '</table>' . PHP_EOL;
         return TRUE;
     }
+
 }
