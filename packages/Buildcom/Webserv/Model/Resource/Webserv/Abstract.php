@@ -1,10 +1,10 @@
 <?php
 abstract class Buildcom_Webserv_Model_Resource_Webserv_Abstract extends Mage_Core_Model_Resource_Abstract
 {
+    const XML_NODE_SERVER_PRODUCTION = 'default/webserv/server/production';
+    const XML_NODE_SERVER_DEVELOPEMENT = 'default/webserv/server/development';
+    const XML_NODE_SERVER_ACTIVE = 'default/webserv/server/active';
 
-    // TODO Use admin to set URI or store in a config
-    const PRODUCTION_URI = 'http://webservices.sys.id.build.com:8080/build-webservices-1.0.0/';
-    const DEV_URI = 'http://devbox2.build.internal:8080/build-webservices-1.0.0/services';
     protected $_services_uri;
 
     /**
@@ -187,7 +187,10 @@ abstract class Buildcom_Webserv_Model_Resource_Webserv_Abstract extends Mage_Cor
     protected function _init($service)
     {
         $this->_service = $service;
-        $this->_services_uri = self::DEV_URI;
+
+        $config = Mage::getConfig();
+        $server_node = $config->getNode(self::XML_NODE_SERVER_ACTIVE) == 'production' ? self::XML_NODE_SERVER_PRODUCTION : self::XML_NODE_SERVER_DEVELOPEMENT;
+        $this->_services_uri = $config->getNode($server_node);
     }
 
 

@@ -26,7 +26,7 @@ class Buildcom_Webserv_IndexController extends Mage_Core_Controller_Front_Action
      */
     public function omdirectAction() {
         Magento_Profiler::start('omtimer');
-        $helper = Mage::helper('Buildcom_Webserv_Helper_Data');
+        $helper = Mage::helper('Buildcom_Webserv_Helper_Direct');
         $helper -> setService('products/' . self::OMC_UNIQUE_PRODUCT_ID);
         //$helper->productId = '75050CB';
         //$helper->manufacturer = 'Delta';

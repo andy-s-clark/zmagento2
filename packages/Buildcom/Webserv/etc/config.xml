@@ -29,4 +29,13 @@
             </webserv_product_load_after>
         </events>
     </global>
+    <default>
+        <webserv>
+            <server>
+                <production>http://webservices.sys.id.build.com:8080/build-webservices-1.0.0/services</production>
+                <development>http://devbox2.build.internal:8080/build-webservices-1.0.0/services</development>
+                <active>development</active>
+            </server>
+        </webserv>
+    </default>
 </config>

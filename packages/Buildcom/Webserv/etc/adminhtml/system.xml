@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+	<system>
+		<section id="webserv" translate="label" module="Mage_Cms" type="text" sortOrder="1001" showInDefault="1" showInWebsite="0" showInStore="0">
+			<label>Build.com Web Services</label>
+			<tab>service</tab>
+			<resource>Mage_Cms::config_cms</resource>
+			<group id="server" translate="label" type="text" sortOrder="100" showInDefault="1" showInWebsite="0" showInStore="0">
+				<label>Web Services Servers</label>
+				<field id="production" translate="label" module="Buildcom_Webserv" type="text" sortOrder="1" showInDefault="1" showInWebsite="0" showInStore="0">
+					<label>Production Server</label>
+				</field>
+				<field id="development" translate="label" module="Buildcom_Webserv" type="text" sortOrder="2" showInDefault="1" showInWebsite="0" showInStore="0">
+					<label>Development Server</label>
+				</field>
+                <field id="active" translate="label" module="Buildcom_Webserv" type="select" sortOrder="3" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Active Server</label>
+                    <source_model>Buildcom_Webserv_Model_Config_Source_Server_Active</source_model>
+                </field>
+			</group>
+		</section>
+	</system>
+</config>

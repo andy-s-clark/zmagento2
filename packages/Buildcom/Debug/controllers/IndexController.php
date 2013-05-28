@@ -6,6 +6,8 @@ class Buildcom_Debug_IndexController extends Mage_Core_Controller_Front_Action
         $edition = Mage::getEdition();
         $version = Mage::getVersion();
         echo '<h1><em>' . htmlentities($edition) . '</em> Edition, Version <em>' . htmlentities($version) . '</em></h1>' . PHP_EOL;
+        $config = Mage::getConfig();
+        var_dump($config);
     }
 
     public function basicAction() {
@@ -32,6 +34,15 @@ class Buildcom_Debug_IndexController extends Mage_Core_Controller_Front_Action
         $config = Mage::getConfig();
         header('Content-Type: text/xml');
         echo $config->getNode()->asXML();
+    }
+
+    public function systemAction() {
+        $config = Mage::getConfig();
+        //header('Content-Type: text/xml');
+        echo $config->getNode('modules/Mage_Checkout')->asXML();
+
+        var_dump($config->getAreaConfig('adminhtml'));
+        exit;
     }
 
     public function designAction() {
