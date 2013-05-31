@@ -1,38 +1,90 @@
 <?php
 class Buildcom_Webserv_IndexController extends Mage_Core_Controller_Front_Action {
-    const OMC_UNIQUE_PRODUCT_ID = '1573671';
-    // Test product from OMC
+    // OMC Test siteid, product and category
+    const OMC_SITE_ID = '33';
+    const OMC_STORE_ID = '55';
+    const OMC_PRODUCT_ID = '1573671';
+    const MMC_CATEGORY_ID = '752';
+
+    // Magento Test product and category
     const MAGE_PRODUCT_ENTITY_ID = 1;
-    // Test product
-    const OMC_UNIQUE_CATEGORY_ID = '5';
-    // Test product from OMC
     const MAGE_CATEGORY_ENTITY_ID = 3;
-    // Test product
 
     public function indexAction() {
         $model = Mage::getModel('Buildcom_Webserv_Model_Product');
-        $product = $model -> load(self::OMC_UNIQUE_PRODUCT_ID);
-        $this -> _vardumpAsTable($product -> getData());
+        $product = $model->load(self::OMC_PRODUCT_ID);
+        $this->_vardumpAsTable($product->getData());
     }
 
     public function categoryAction() {
         $model = Mage::getModel('Buildcom_Webserv_Model_Category');
-        $category = $model -> load(self::OMC_UNIQUE_CATEGORY_ID);
-        $this -> _vardumpAsTable($category -> getData());
+        $category = $model->load(self::MMC_CATEGORY_ID);
+        $this->_vardumpAsTable($category->getData());
     }
 
     /**
      * Show product details as listed in OMC
      */
     public function omdirectAction() {
-        Magento_Profiler::start('omtimer');
         $helper = Mage::helper('Buildcom_Webserv_Helper_Direct');
-        $helper -> setService('products/' . self::OMC_UNIQUE_PRODUCT_ID);
+
+        echo '<h1>Tests</h2>' . PHP_EOL;
+
+        echo '<h2>/categories/facetCategory</h2>' . PHP_EOL;
+        $helper->setService('/categories/facetCategory')
+            ->setPostData('siteId', self::OMC_SITE_ID)
+            ->setPostData('categoryId', self::MMC_CATEGORY_ID);
+        $results = $helper->execute();
+        $this->_vardumpAsTable((array)$results);
+        echo '<hr />' . PHP_EOL;
+
+        echo '<h2>/products/keywordSearch</h2>' . PHP_EOL;
+        $helper->setService('/products/keywordSearch')
+            ->setQueryArg('updateCache', FALSE)
+            ->setPostData('siteId', self::OMC_SITE_ID)
+            ->setPostData('selectedFacetCriteriaList', array( // TODO
+                3250 => 'rattan', // Material
+            ))
+            ->setPostData('pricebookId', 1) // TODO
+            ->setPostData('discontinuedFilter', FALSE) // TODO
+            ->setPostData('page', 1) // TODO (Page 0 or 1?)
+            ->setPostData('pageSize', 3)
+            ->setPostData('sortOption', 'SCORE')
+            ->setPostData('productDropViewType', 'LIST')
+            ->setPostData('keyword', '')
+            ->setPostData('keyword', self::OMC_STORE_ID);
+        $results = $helper->execute();
+        $this->_vardumpAsTable((array)$results);
+        echo '<hr />' . PHP_EOL;
+
+        echo '<h2>/products/categorySearch</h2>' . PHP_EOL;
+        $helper->setService('/products/categorySearch')
+            ->setQueryArg('updateCache', FALSE)
+            ->setPostData('siteId', self::OMC_SITE_ID)
+            ->setPostData('selectedFacetCriteriaList', array( // TODO
+                3250 => 'rattan', // Material
+            ))
+            ->setPostData('pricebookId', 1) // TODO
+            ->setPostData('discontinuedFilter', FALSE) // TODO
+            ->setPostData('page', 1) // TODO (Page 0 or 1?)
+            ->setPostData('pageSize', 3)
+            ->setPostData('sortOption', 'SCORE')
+            ->setPostData('productDropViewType', 'LIST')
+            ->setPostData('categoryId', self::MMC_CATEGORY_ID);
+        $results = $helper->execute();
+        $this->_vardumpAsTable((array)$results);
+        echo '<hr />' . PHP_EOL;
+
+        Magento_Profiler::start('omtimer');
+        echo '<h2>/products/{uniqueId}</h2>' . PHP_EOL;
+        $helper->setService('products/' . self::OMC_PRODUCT_ID)
+            ->setQueryArg('updateCache', FALSE);
         //$helper->productId = '75050CB';
         //$helper->manufacturer = 'Delta';
-        $product = $helper -> execute();
+        $results = $helper->execute();
         Magento_Profiler::stop('omtimer');
-        $this -> _vardumpAsTable((array)$product);
+        $this->_vardumpAsTable((array)$results);
+        echo '<hr />' . PHP_EOL;
     }
 
     /**
@@ -40,8 +92,8 @@ class Buildcom_Webserv_IndexController extends Mage_Core_Controller_Front_Action
      */
     public function catalogproductAction() {
         $model = Mage::getModel('Mage_Catalog_Model_Product');
-        $product = $model -> load(self::MAGE_PRODUCT_ENTITY_ID);
-        $this -> _vardumpAsTable($product -> getData());
+        $product = $model->load(self::MAGE_PRODUCT_ENTITY_ID);
+        $this->_vardumpAsTable($product->getData());
     }
 
     /**
@@ -49,8 +101,8 @@ class Buildcom_Webserv_IndexController extends Mage_Core_Controller_Front_Action
      */
     public function catalogcategoryAction() {
         $model = Mage::getModel('Mage_Catalog_Model_Category');
-        $product = $model -> load(self::MAGE_CATEGORY_ENTITY_ID);
-        $this -> _vardumpAsTable($product -> getData());
+        $product = $model->load(self::MAGE_CATEGORY_ENTITY_ID);
+        $this->_vardumpAsTable($product->getData());
     }
 
     /**
@@ -58,20 +110,20 @@ class Buildcom_Webserv_IndexController extends Mage_Core_Controller_Front_Action
      * TODO
      */
     public function collectionAction() {
-        $itemsCollection = Mage::getModel('Buildcom_Webserv_Model_Product') -> getCollection() -> load();
-        //->addIdFilter(array(self::OMC_UNIQUE_PRODUCT_ID))
+        $itemsCollection = Mage::getModel('Buildcom_Webserv_Model_Product')->getCollection()->load();
+        //->addIdFilter(array(self::OMC_PRODUCT_ID))
         /*->addAttributeToFilter(array(
          array('attribute' => 'sku', '=' => 'BCI1573671'),
          ))*/
         //->addAttributeToSelect('url_key')
         foreach ($itemsCollection as $item) {
             //echo '<h2>' . htmlentities($item->getSku()) . '</h2>' . PHP_EOL;
-            //$this -> _vardumpAsTable($item -> getData());
+            //$this->_vardumpAsTable($item->getData());
         }
 
-        $itemsCollection = Mage::getModel('Buildcom_Webserv_Model_Category') -> getCollection() -> load();
+        $itemsCollection = Mage::getModel('Buildcom_Webserv_Model_Category')->getCollection()->load();
         foreach ($itemsCollection as $item) {
-            $this -> _vardumpAsTable($item -> getData());
+            $this->_vardumpAsTable($item->getData());
         }
     }
 
